@@ -1,7 +1,7 @@
 # Magisk Trust User Certs
 This module makes all installed user certificates part of the system certificate store, so that they will automatically be used when building the trust chain. This module makes it unnecessary to add the network_security_config property to an application's manifest.
 
-# Accompanying blogpost
+## Accompanying blogpost
 [Intercepting HTTPS Traffic from Apps on Android 7+ using Magisk & Burp](https://blog.nviso.be/2017/12/22/intercepting-https-traffic-from-apps-on-android-7-using-magisk-burp/)
 
 ### Installation
