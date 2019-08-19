@@ -1,6 +1,6 @@
 id=trustusercerts
 name=Always Trust User Certificates
-version=v0.3
+version=v0.4
 versionCode=1
 author=Jeroen Beckers (NVISO.be)
 description=This module adds all installed user certificates to the system trust store.
