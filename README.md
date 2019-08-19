@@ -13,6 +13,9 @@ This module makes all installed user certificates part of the system certificate
 6. The installed user certificates can now be found in the system store.
 
 ### Changelog
+#### v0.4
+* Updated Module to be compatible with latest Magisk module template.
+
 #### v0.3
 * The module now removes all user-installed certificates from the system store before copying them over, so that user certificates that were removed will no longer be kept in the system store.
 
