@@ -29,4 +29,4 @@ This module makes all installed user certificates part of the system certificate
 
 
 
-Template used from [Magisk's module template](https://github.com/topjohnwu/magisk-module-template)
+Template partially used from [Magisk's module template](https://github.com/topjohnwu/magisk-module-template)
