@@ -2,6 +2,6 @@ id=trustusercerts
 name=Always Trust User Certificates
 version=v0.4
 versionCode=1
-author=Jeroen Beckers (NVISO.be)
+author=Jeroen Beckers (NVISO.be) & Edu Novella (NowSecure)
 description=This module adds all installed user certificates to the system trust store.
 minMagisk=20300
