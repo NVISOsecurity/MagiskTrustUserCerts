@@ -15,7 +15,7 @@ This module makes all installed user certificates part of the system certificate
 Install the certificate as a user certificate and restart the device.
 
 ### Removing certificates
-Certificates are stored in `/data/adb/modules/trustusercerts/system/etc/security/cacerts`. To remove certificates, remove them from the directory through adb and restart your device.
+Remove the certificate from the user store through the settings, and restart the device.
 
 ### Changelog
 
