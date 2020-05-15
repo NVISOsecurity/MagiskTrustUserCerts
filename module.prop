@@ -4,4 +4,3 @@ version=v0.4.1
 versionCode=41
 author=Jeroen Beckers (NVISO.eu)
 description=This module adds all installed user certificates to the system trust store.
-minMagisk=2400
