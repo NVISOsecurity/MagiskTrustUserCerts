@@ -3,7 +3,7 @@
 # This will make your scripts compatible even if Magisk change its mount point in the future
 MODDIR=${0%/*}
 
-# Mount to apex on post-fs-data mode - Added for Android 13+
+# Mount to apex on post-fs-data mode - Added for Android 14+
 mount -o bind /system/etc/security/cacerts /apex/com.android.conscrypt/cacerts
 
 mkdir -p $MODDIR/system/etc/security/cacerts
