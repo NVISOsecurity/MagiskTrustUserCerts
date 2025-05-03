@@ -1,12 +1,34 @@
-#!/system/bin/sh
-# Please don't hardcode /magisk/modname/... ; instead, please use $MODDIR/...
-# This will make your scripts compatible even if Magisk change its mount point in the future
+# Certificates are collected during post-fs-data so that they are auto-mounted on top of /system for non-conscrypt devices
 MODDIR=${0%/*}
+SYS_CERT_DIR=/system/etc/security/cacerts
 
-mkdir -p $MODDIR/system/etc/security/cacerts
-rm $MODDIR/system/etc/security/cacerts/*
-cp -f /data/misc/user/0/cacerts-added/* $MODDIR/system/etc/security/cacerts/
-set_perm_recursive $MODDIR/system/etc/security/cacerts/ root root 644
+log() {
+    echo "$(date '+%m-%d %H:%M:%S ')" "$@" >> $MODDIR/log.txt
+}
 
-# This script will be executed in post-fs-data mode
-# More info in the main Magisk thread
+collect_user_certs(){
+
+    mkdir -p -m 700 $MODDIR$SYS_CERT_DIR
+
+    log "Grabbing user certs"
+    # Add the user-defined certs, looping over all available users
+    for dir in /data/misc/user/*; do
+        if [ -d "$dir/cacerts-added" ]; then
+            for cert in "$dir/cacerts-added"/*; do
+                cp "$cert" $MODDIR$SYS_CERT_DIR/
+                log "Grabbing user cert: $(basename "$cert")"
+            done
+        fi
+    done
+}
+
+main(){
+    echo "" > $MODDIR/log.txt
+    log "MagiskTrustUserCerts - post-fs-data.sh"
+
+    collect_user_certs
+
+    log "Grabbing /system certs"
+    cp $SYS_CERT_DIR/* $MODDIR$SYS_CERT_DIR
+}
+main
