@@ -10,6 +10,9 @@ collect_user_certs(){
 
     mkdir -p -m 700 $MODDIR$SYS_CERT_DIR
 
+    # Clean directory so that deleted certs actually disappear
+    rm -rf $MODDIR$SYS_CERT_DIR/*
+
     log "Grabbing user certs"
     # Add the user-defined certs, looping over all available users
     for dir in /data/misc/user/*; do
