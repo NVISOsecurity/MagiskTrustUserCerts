@@ -1,6 +1,7 @@
 id=trustusercerts
 name=Always Trust User Certificates
-version=v1.0
-versionCode=43
+version=v1.2
+versionCode=44
 author=Jeroen Beckers (NVISO.eu)
 description=Copy user certs to the system trust store
+updateJson=https://raw.githubusercontent.com/NVISOsecurity/AlwaysTrustUserCerts/master/update.json

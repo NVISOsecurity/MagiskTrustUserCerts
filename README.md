@@ -22,6 +22,10 @@ Remove the certificate from the user store through the settings and restart the 
 
 ## Changelog
 
+### v1.2
+
+* Added automatic update support
+
 ### v1.1
 
 * Fixed permission issue for non-conscrypt
