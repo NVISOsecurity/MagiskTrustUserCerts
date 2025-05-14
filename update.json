@@ -2,6 +2,6 @@
     "version": "v1.1",
     "versionCode": 43,
     "zipUrl": "https://github.com/NVISOsecurity/AlwaysTrustUserCerts/releases/download/v1.1/AlwaysTrustUserCerts_v1.1.zip",
-    "changelog": "https://github.com/NVISOsecurity/AlwaysTrustUserCerts/blob/master/CHANGELOG.md"
+    "changelog": "https://raw.githubusercontent.com/NVISOsecurity/AlwaysTrustUserCerts/master/CHANGELOG.md"
 }
 
