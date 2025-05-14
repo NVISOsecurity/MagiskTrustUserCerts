@@ -1,27 +1,18 @@
-# Magisk Trust User Certs
+# Always Trust User Certs
 
 This module makes all installed user certificates part of the system certificate store, so that they will automatically be used when building the trust chain. This module makes it unnecessary to add the network_security_config property to an application's manifest.
 
 Features:
 
 * Support for multiple users
-* Support for Magisk and KernelSU
+* Support for Magisk/KernelSU/KernelSU Next
 * Support for devices with and without mainline/conscrypt updates
 
-## Accompanying blogpost
+## Conscrypt certs or not
 
-[Intercepting HTTPS Traffic from Apps on Android 7+ using Magisk & Burp](https://blog.nviso.be/2017/12/22/intercepting-https-traffic-from-apps-on-android-7-using-magisk-burp/)
+Depending on your Android version and Google Play Security Update version, your certificates will be either stored in `/system/etc/security/cacerts` or in `/apex/com.android.conscrypt/cacerts/`. This module handles all scenarios and should work on any device from Android 7 until Android 16.
 
-## Installation
-
-1. Install [Magisk](https://github.com/topjohnwu/Magisk)
-2. Zip files `zip -r AlwaysTrustUserCerts.zip ./*` or download zip from releases
-3. Install in Magisk / KernelSU
-4. Install client certificates through [normal flow](https://support.portswigger.net/customer/portal/articles/1841102-installing-burp-s-ca-certificate-in-an-android-device)
-5. Restart your device. Certificate are copied during boot.
-6. The installed user certificates can now be found in the system store.
-
-### Adding certificates
+### Installing certificates
 
 Install the certificate as a user certificate and restart the device.
 
@@ -30,6 +21,12 @@ Install the certificate as a user certificate and restart the device.
 Remove the certificate from the user store through the settings and restart the device.
 
 ## Changelog
+
+### v1.1
+
+* Fixed permission issue for non-conscrypt
+* Fixed removal of certs for non-conscrypt
+* Renamed repo
 
 ### v1.0
 
