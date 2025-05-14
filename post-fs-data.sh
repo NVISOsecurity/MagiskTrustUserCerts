@@ -8,7 +8,7 @@ log() {
 
 collect_user_certs(){
 
-    mkdir -p -m 700 $MODDIR$SYS_CERT_DIR
+    mkdir -p $MODDIR$SYS_CERT_DIR
 
     # Clean directory so that deleted certs actually disappear
     rm -rf $MODDIR$SYS_CERT_DIR/*
