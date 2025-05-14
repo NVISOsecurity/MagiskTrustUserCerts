@@ -1,7 +1,7 @@
 {
-    "version": "v1.2",
-    "versionCode": 44,
-    "zipUrl": "",
-    "changelog": "https://raw.githubusercontent.com/osm0sis/PlayIntegrityFork/main/CHANGELOG.md"
+    "version": "v1.1",
+    "versionCode": 43,
+    "zipUrl": "https://github.com/NVISOsecurity/AlwaysTrustUserCerts/releases/download/v1.1/AlwaysTrustUserCerts_v1.1.zip",
+    "changelog": "https://github.com/NVISOsecurity/AlwaysTrustUserCerts/blob/master/CHANGELOG.md"
 }
 
