@@ -1,3 +1,8 @@
+## v1.3
+
+* Fixed bug on A14
+* Fixed bug on A15/A16
+
 ## v1.2
 
 * Added automatic update support
