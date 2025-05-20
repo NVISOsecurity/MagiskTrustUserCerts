@@ -8,9 +8,9 @@ Features:
 * Support for Magisk/KernelSU/KernelSU Next
 * Support for devices with and without mainline/conscrypt updates
 
-## Conscrypt certs or not
+Depending on your Android version and Google Play Security Update version, your certificates will be either stored in `/system/etc/security/cacerts` or in `/apex/com.android.conscrypt/cacerts/`. This module handles all scenarios and works on any device from Android 7 until Android 16.
 
-Depending on your Android version and Google Play Security Update version, your certificates will be either stored in `/system/etc/security/cacerts` or in `/apex/com.android.conscrypt/cacerts/`. This module handles all scenarios and should work on any device from Android 7 until Android 16.
+## Usage
 
 ### Installing certificates
 
