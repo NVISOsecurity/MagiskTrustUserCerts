@@ -7,41 +7,59 @@ log() {
     echo "$(date '+%m-%d %H:%M:%S ')" "$@" >> $MODDIR/log.txt
 }
 
-inject_into_zygote(){
+has_mount() {
+  local pid="$1"
+  grep -q " $APEX_CERT_DIR " "/proc/$pid/mountinfo"
+}
 
-    log "Injecting into Zygote"
+monitor_zygote(){
 
-    # Collect all zygote PIDs (both 32‑ and 64‑bit)
-    zygote_pids=""
-    for name in zygote zygote64; do
-        for p in $(pidof $name 2>/dev/null); do
-            zygote_pids="$zygote_pids $p"
+    (
+    while true; do
+
+        # Collect all zygote PIDs (both 32‑ and 64‑bit)
+        zygote_pids=""
+        for name in zygote zygote64; do
+            for p in $(pidof $name 2>/dev/null); do
+                zygote_pids="$zygote_pids $p"
+            done
         done
-    done
 
-    log "Zygote PIDs: $zygote_pids"
+        for zp in $zygote_pids; do
 
-    for zp in $zygote_pids; do
-        log "zygote PID: $zp"
+            # if our bind isn’t present, re-apply it
+            if ! has_mount "$pid"; then
 
-        log "  Injecting into $zp"
-        /system/bin/nsenter --mount=/proc/$zp/ns/mnt -- /bin/mount --bind $APEX_CERT_DIR $APEX_CERT_DIR
+                # Get active children
+                children=$(echo "$zp" | xargs -n1 ps -o pid -P  | grep -v PID)
 
-        # Get active children
-        children=$(echo "$zp" | xargs -n1 ps -o pid -P  | grep -v PID)
+                # Fallback for old Android ps (columns: USER PID PPID ...):
+                if [ -z "$children" ]; then
+                    children=$(ps \
+                    | awk -v PPID=$zp '$3==PPID { print $2 }')
+                fi
 
-        # Fallback for old Android ps (columns: USER PID PPID ...):
-        if [ -z "$children" ]; then
-            children=$(ps \
-            | awk -v PPID=$zp '$3==PPID { print $2 }')
-        fi
+                # After a crash, zygote is a bit unstable, so waiting to settle.
+                if [ "$(echo "$children" | wc -l)" -lt 5 ]; then
+                    /system/bin/sleep 1s
+                    continue
+                fi
 
-        for pid in $children; do
-            log "  Injecting into child: $pid"
-            /system/bin/nsenter --mount=/proc/$pid/ns/mnt -- /bin/mount --bind $APEX_CERT_DIR $APEX_CERT_DIR
+                log "Injecting into zygote ($zp)"
+                /system/bin/nsenter --mount=/proc/$zp/ns/mnt -- /bin/mount --rbind $SYS_CERT_DIR $APEX_CERT_DIR
 
+
+                for pid in $children; do
+                    if ! has_mount "$pid"; then
+                        log "  Injecting into child $pid"
+                        /system/bin/nsenter --mount=/proc/$pid/ns/mnt -- /bin/mount --rbind $SYS_CERT_DIR $APEX_CERT_DIR
+                    fi
+                done
+            fi
         done
+        sleep 5
     done
+    )&
 }
 
 main(){
@@ -65,7 +83,7 @@ main(){
         chmod 644 $SYS_CERT_DIR/*
         chcon u:object_r:system_security_cacerts_file:s0 $SYS_CERT_DIR/*
 
-        inject_into_zygote
+        monitor_zygote
     else
         # /system certs are automatically mounted by Magisk due to collection in post-fs-data
 	    log "No conscrypt"
